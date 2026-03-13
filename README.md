@@ -1,8 +1,6 @@
-# Vocabulary assistant 튜토리얼
+# Vocabulary assistant 튜토리얼 
 
-## 한글 설명
-
-이 튜토리얼은 [Vocabulary assitant web application](https://huggingface.co/spaces/hksung/english-vocab-interface-test)을 로컬 컴퓨터에서 실행하고 수정하는 방법을 단계별로 설명합니다.이 튜토리얼에서 설명하는 내용은 다음과 같습니다.
+이 튜토리얼은 <a href="https://huggingface.co/spaces/hksung/english-vocab-interface-test" target="_blank">Vocabulary assistant web application</a>을 로컬 컴퓨터에서 실행하고 수정하는 방법을 단계별로 설명합니다. 튜토리얼에서 설명하는 내용은 다음과 같습니다.
 
 1. [필요한 프로그램 설치](#1-필요한-프로그램-설치)
     - [Python 설치](#11-python-설치)
@@ -36,6 +34,7 @@
 - Python을 먼저 설치합니다.
 - 다운로드 링크: https://www.python.org/downloads/
 - 이 튜토리얼에서는 Python 3.9 이상이면 정상적으로 작동합니다.
+
 ### 1.1.1. Windows
 - 설치할 때 반드시 다음 옵션을 체크합니다.
 
@@ -45,14 +44,14 @@ Add Python to PATH
 
 ### 1.1.2. Mac
 - Mac에서는 보통 Python 설치 프로그램을 실행하면 자동으로 설정됩니다.
-- 다운로드한 `.pkg` 파일을 실행하고 **Continue → Install**을 클릭합니다.
+- 다운로드한 `.pkg` 파일을 실행하고 Continue → Install 을 클릭합니다.
 
 ## 1.2 Python 설치 확인
 - 설치가 완료되었는지 확인하려면 터미널(명령어 창) 을 열어 다음 명령어를 입력합니다.
 
 ### 1.2.1. Windows
 - 시작 메뉴를 엽니다.
-- **Command Prompt** 또는 **cmd** 를 검색합니다.
+- `Command Prompt` 또는 `PowerShell`을 검색합니다.
 - 프로그램을 실행합니다.
 - 창이 열리면 입력
 
@@ -62,19 +61,19 @@ python --version
 
 ### 1.2.2. Mac
 - `Command + Space` 를 누릅니다.  
-- **Terminal**을 검색하여 실행합니다.
+- `Terminal`을 검색하여 실행합니다.
 - 터미널이 열리면 입력
 
 ```bash
 python3 --version
 ```
-버전 번호가 출력되면 정상적으로 설치된 것입니다.
+- 버전 번호가 출력되면 정상적으로 설치된 것입니다.
 
 
 ## 1.2 코드 편집기 설치 
 
-이 프로젝트의 파일을 수정하려면 코드 편집기(code editor) 가 필요합니다. 가장 많이 사용하는 무료 편집기는 Visual Studio Code (VS Code) 입니다.
-- 다운로드: https://code.visualstudio.com/
+이 프로젝트의 파일을 수정하려면 **코드 편집기(code editor)** 가 필요합니다. 흔히 많이 사용하는 무료 편집기는 Visual Studio Code (VS Code)입니다.
+- 다운로드: [https://code.visualstudio.com/](https://code.visualstudio.com/)
 - 설치 후 프로그램을 실행합니다.
 - 이미 다른 코드 편집기를 사용하고 있다면 그대로 사용해도 괜찮습니다. 예를 들어 다음과 같은 프로그램을 사용할 수 있습니다.
     - PyCharm
@@ -86,27 +85,25 @@ python3 --version
 
 ## 1.3 Ollama 설치
 
-이 프로젝트는 AI 분석을 위해 *Ollama*를 사용합니다.
-Ollama를 사용하면 무료로 로컬 AI 모델을 실행할 수 있습니다.
-이 튜토리얼에서는 gpt-oss:20b 모델을 사용합니다.
-- 다운로드 [https://ollama.com](https://ollama.com)
+- 이 프로젝트는 생성형 언어 모델(Generative LLM), 즉 흔히 말하는 AI 모델을 사용하며, 로컬 환경에서 실행하기 위해 *Ollama*를 활용합니다. 
+- Ollama를 사용하면 별도의 비용 없이 로컬 컴퓨터에서 AI 모델을 실행할 수 있습니다. 
+- 다운로드: [https://ollama.com](https://ollama.com)
 
 ### 1.3.1. Windows
 - 다운로드 링크에서 Download for *Windows*를 클릭합니다.
-- 다운로드된 **.exe 파일**을 실행합니다.
+- 다운로드된 `.exe` 파일을 실행합니다.
 - 설치 과정을 진행합니다.
 - 설치가 완료되면 Ollama가 자동으로 실행됩니다.
 
 ### 1.3.2. Mac
 - 다운로드 링크에서 Download for *macOS*를 클릭합니다.
-- 다운로드된 **.dmg 파일**을 실행합니다.
+- 다운로드된 `.dmg 파일`을 실행합니다.
 - Ollama 아이콘을 Applications 폴더로 드래그합니다.
-- Applications에서 Ollama를 실행합니다. (처음 실행하면, Ollama가 백그라운드에서 실행됩니다.)
+- Applications에서 Ollama를 실행합니다.
+- 처음 실행하면, Ollama가 백그라운드에서 실행됩니다.
 
-### 1.3.3. 모델 다운로드 (중요)
-
-이 튜토리얼에서는 *gpt-oss:20b* 모델 (무료, 오픈 모델)을 사용합니다.
-터미널을 열고 다음 명령어를 입력합니다.
+### 1.3.3. 모델 다운로드 
+- 이 튜토리얼에서는 **gpt-oss:20b** 모델(무료 오픈 모델)을 사용했습니다. 따라서 실행 전에 해당 모델을 먼저 다운로드해야 합니다. 다운로드를 위해 터미널(Windows의 경우 Command Prompt, PowerShell)을 열고 다음 명령어를 입력합니다.
 
 ```bash
 ollama run gpt-oss:20b
@@ -115,8 +112,7 @@ ollama run gpt-oss:20b
 - 처음 실행하면 모델이 자동으로 다운로드됩니다.
 - 모델 크기가 크기 때문에 다운로드에 몇 분 정도 걸릴 수 있습니다.
 - 다운로드가 완료되면 모델이 실행됩니다. (이 과정은 처음 한 번만 필요합니다.)
-- `gpt-oss:20b` 모델은 로컬 컴퓨터에서 실행되기 때문에 API 키나 비용이 필요하지 않습니다.
-- 참고: Ollama에서는 [다른 모델](https://ollama.com/search)도 사용할 수 있습니다. 예를 들어, llama3를 사용해보고 싶다면, 다음과 다운로드할 수 있습니다.
+- (참고) Ollama에서는 [다른 모델](https://ollama.com/search)도 사용할 수 있습니다. 예를 들어, llama3를 사용해보고 싶다면, 다음과 같이 다운로드할 수 있습니다.
 
 ```bash
 ollama run llama3
@@ -127,36 +123,34 @@ ollama run llama3
 # 2. 프로젝트 다운로드 및 열기
 ## 2.1. Github에서 다운로드
   - GitHub [repository 페이지](https://github.com/hksung/ai-vocab-assistant-tutorial)로 이동합니다.
-  - 파란색 *Code* 버튼을 클릭합니다.
-  - *Download ZIP*을 선택합니다.
+  - 파란색 `Code` 버튼을 클릭합니다.
+  - `Download ZIP`을 선택합니다.
   - 다운로드된 ZIP 파일을 압축 해제합니다.
  ![alt text](./images/image.png)
-  - 다운로드한 폴더를 내 컴퓨터에서 원하는 위치 (예: Desktop, Documents)로 이동합니다.
+  - 다운로드한 GitHub repository 폴더를 내 컴퓨터에서 원하는 위치 (예: Desktop, Documents)로 이동합니다.
 
 ## 2.2 프로젝트 폴더 열기
   - 이제 다운로드한 프로젝트 폴더를 코드 편집기(code editor)에서 엽니다.
   - [여기](#12-코드-편집기-설치)에서 다룬 것처럼, 어떤 편집기를 사용해도 괜찮지만 기본적으로 다음과 같은 방식으로 프로젝트 폴더 전체를 열 수 있습니다.
     - 코드 편집기를 실행합니다.
-    - 메뉴에서 **Open Folder** 또는 **Open Project** 를 선택합니다.
+    - 메뉴에서 `Open Folder` 또는 `Open Project` 를 선택합니다.
     - 다운로드한 프로젝트 폴더를 선택합니다.
-  - 예를 들어, VS Code 실행해서 폴더를 열면 다음과 같이 파일 구조가 보입니다.
+    - 예를 들어, VS Code 실행해서 폴더를 열면 다음과 같이 파일 구조가 보입니다.
 ![alt text](./images/image-1.png)
 
 ---
 
 # 3. Python 가상환경 만들기 (권장)
-- 프로젝트마다 Python 환경을 따로 만드는 것이 좋습니다.
+- 일반적으로 프로젝트마다 Python 환경을 따로 만드는 것이 좋습니다.
 
 ## 3.1 Windows
 
 ### 3.1.1. Command prompt 열기
-  - 시작 메뉴(Start)를 클릭합니다.
-  - Command Prompt 또는 cmd 를 검색합니다.
-  - 프로그램을 실행합니다.
-  - 또는 `Windows 키 + R → cmd 입력 → Enter`
+  - 시작 메뉴을 엽니다.
+  - Command Prompt 또는 PowerShell을 실행합니다.
 
 ### 3.1.2. 프로젝트 폴더로 이동
-- 프로젝트 폴더가 있는 위치로 이동합니다. 
+- Command Prompt나 PowerShell에서 다운로드 받은 프로젝트 폴더가 있는 위치로 이동합니다. 
 - 예를 들어, Desktop에 해당 폴더가 있는 경우:
 
 ```bash
@@ -178,21 +172,17 @@ python -m venv .venv
 ```bash
 .venv\Scripts\activate
 ```
-- 성공하면 터미널 앞에 다음과 같은 표시가 나타납니다.
 
-```
-(.venv)
-```
+- 성공하면 터미널 앞에 `(.venv)` 표시가 나타납니다.
 - 이 표시가 보이면 가상환경이 정상적으로 활성화된 것입니다.
 
 ## 3.2 Mac
 
 ### 3.2.1. Terminal 열기
-- `Command + Space` 를 누릅니다.
-- **Terminal**을 검색합니다.
 - Terminal을 실행합니다.
 
 ### 3.2.2. 프로젝트 폴더로 이동
+- Terminal에서 다운로드 받은 프로젝트 폴더가 있는 위치로 이동합니다.  
 - 예를 들어, Desktop에 해당 폴더가 있는 경우:
 
 ```bash
@@ -213,20 +203,16 @@ python3 -m venv .venv
 ```bash
 source .venv/bin/activate
 ```
-- 성공하면 터미널 앞에 다음과 같은 표시가 나타납니다.
-```
-(.venv)
-```
-- 이 표시가 보이면 가상환경이 정상적으로 활성화된 것입니다.
+- 성공하면 터미널 앞에 `(.venv)` 표시가 나타납니다.
 
 ---
 
 # 4. 필요한 패키지 설치
 
 - 이제 프로젝트에 필요한 Python 패키지를 설치합니다.
-- 3번 단계에서 열었던 Command Prompt (Windows) 또는 Terminal (Mac)을 그대로 사용합니다.
+- 3번 단계에서 열었던 Command Prompt 혹은 PowerShell (Windows) 또는 Terminal (Mac)을 그대로 사용합니다.
   - 가상환경을 사용한다면, 가상환경이 활성화되어 있는지 다시 확인해보세요.
-  - 현재 터미널이 프로젝트 폴더 안에 있는지 확인합니다. 예를 들어, Windows의 경우는 `dir`, Mac의 경우는 `ls` 라고 터미널에서 명령어를 입력했을 때, 다음과 같은 파일이 보이면 올바른 폴더에 있는 것입니다. 보이지 않는다면, [프로젝트 폴더로 이동](#322-프로젝트-폴더로-이동)해야 합니다.
+  - 현재 터미널이 프로젝트 폴더 안에 있는지 확인합니다. 예를 들어, Windows의 경우는 `dir`, Mac의 경우는 `ls` 라고 터미널에서 명령어를 입력했을 때, 다음과 같은 파일이 보이면 올바른 폴더에 있는 것입니다. 보이지 않는다면, 반드시 [프로젝트 폴더로 이동](#322-프로젝트-폴더로-이동)해야 합니다.
 ```
 backend
 frontend
@@ -240,26 +226,25 @@ pip install -r requirements.txt
 ```
 
 - 이 명령어는 `requirements.txt` 파일에 있는 Python 패키지들을 자동으로 설치합니다. 설치에는 몇 분 정도 걸릴 수 있습니다.
-
-## 참고
 - 일부 Mac 환경에서는 다음 명령어를 사용할 수도 있습니다.
 ```bash
 pip3 install -r requirements.txt
 ```
-- 하지만 가상환경이 활성화된 상태에서는 대부분 `pip` 명령어만 사용해도 정상적으로 작동합니다.
 
 ---
 
 # 5. 프로젝트 실행
 
 ## 5.1. backend 폴더로 이동
-- 프로그램을 내 컴퓨터에서 실행하기 위해 모든 준비가 끝났습니다.
-- 이 프로젝트는 *backend* 폴더에서 실행해야 합니다. 따라서 우선 터미널에서 backend 폴더로 이동하겠습니다.
-- 이 명령어는 현재 위치에서 *backend* 폴더로 이동하는 명령어입니다.
+- Web application을 내 컴퓨터에서 실행하기 위해 모든 준비가 끝났습니다.
+- 프로그램은 `backend` 폴더에서 실행해야 합니다. 따라서 우선 Command Prompt 혹은 PowerShell (Windows) 또는 Terminal (Mac)에서 `backend` 폴더로 이동하겠습니다.
+- 이 명령어는 현재 위치(다운받은 GitHub repository 폴더에 있다고 가정)에서 `backend` 폴더로 이동하는 명령어입니다.
+
 ```bash
 cd backend
 ```
-또는 폴더 위치를 전체를 주고 이동할 수도 있습니다.
+
+- 또는 폴더 위치를 전체를 주고 이동할 수도 있습니다.
 ```bash
 cd Desktop\ai-vocab-assistant-tutorial\backend
 ```
@@ -293,16 +278,22 @@ http://127.0.0.1:8000
 
 ## 5.5 결과 파일 저장 위치
 
-- 웹앱에서 글을 분석하고 결과를 `저장`하면, 그 결과는 자동으로 파일로 저장됩니다.
-- 저장 위치: "saved/" 
-- 이 폴더 안에는 다음과 같은 파일이 생성됩니다. (e.g., *session_0.json*)
+- Web application 에서 글을 분석하고 결과를 `저장`하면, 그 결과는 자동으로 파일로 내 컴퓨터에 저장됩니다.
+
+<img src="./images/image-4.png" width="200">
+<img src="./images/image-5.png" width="200">
+
+- 저장 위치는 다운받은 GitHub repository 안의 "saved/" 폴더입니다. 예를 들어, 다음과 같은 파일이 생성됩니다. (e.g., *session_0.json*)
+
+<img src="./images/image-6.png" width="200">
+
+- 본 튜토리얼의 핵심 목적은 아니지만, 이렇게 결과를 파일로 저장해 두면 이후에 분석 결과를 다시 확인하거나, 여러 사용자 데이터를 모아 추가적인 분석이나 연구 자료로 활용할 수 있습니다.
 
 ---
 
 # 6. 프로젝트 구조 이해
 
-- 이제 어떤 파일을 수정하면 웹앱의 어느 부분이 바뀌는지 알아보겠습니다.
-- 이 프로젝트에서 주로 보게 될 파일은 다음 5개입니다.
+- 이제 어떤 파일을 수정하면 Web application의 어느 부분이 바뀌는지 알아보겠습니다. 이 프로젝트에서 주로 보게 될 파일은 다음 5개입니다.
 
 ```text
 backend/prompt.py
@@ -317,7 +308,7 @@ frontend/index.html
 - 이 튜토리얼에서 가장 중요한 파일은 `prompt.py`입니다. 따라서 먼저 이 파일의 사용 방법을 자세히 설명하고, 나머지 네 파일은 비교적 간단히 소개하겠습니다.
 
 ## 6.1 backend/prompt.py (★)
-- 이 파일은 AI에게 어떤 방식으로 답변할지 지시하는 **프롬프트(prompt)** 를 담고 있습니다.
+- 이 파일은 AI에게 어떤 방식으로 답변할지 지시하는 `프롬프트(prompt)` 를 담고 있습니다.
 - 예를 들어, 이 파일을 수정하면 다음과 같은 부분이 달라질 수 있습니다.
   - AI가 더 친절한 말투로 설명하도록 만들기
   - 더 엄격하게 단어를 선택하도록 만들기
@@ -331,18 +322,21 @@ frontend/index.html
 ![alt text](./images/image-3.png)
 
 ### 6.1.2. 수정 예시
+
 #### 6.1.2.1. AI의 역할 설명
+
 - 예를 들어, 다음 부분을 수정할 수 있습니다.
 ```text
 You are a writing assistant helping a learner revise vocabulary in an English essay.
 ```
 - 수정 예시
 ```text
-You are an academic writing assistant helping students improve vocabulary in university-level essays.
+You are an English teacher helping a high school student improve vocabulary.
 ```
-- 이렇게 바꾸면 AI의 기준이 "university-level"로 달라질 수 있습니다.
+- 이렇게 바꾸면 AI는 어려운 어휘 대신 더 쉬운 표현을 제안하는 방향으로 반응할 가능성이 높습니다.
 
 ### 6.1.2.2. 추천 단어의 기준 변경
+
 - 예를 들어, 다음 부분을 수정할 수 있습니다.
 ```text
 Avoid rare or technical words that would sound unnatural in a typical university essay.
@@ -372,14 +366,14 @@ PROMPT = """
 
 #### 6.1.3.2. 출력 구조
 - 프롬프트 아래쪽에는 AI가 출력해야 하는 JSON 형식 예시가 포함되어 있습니다. 
-- 이 형식은 backend 코드가 AI 응답을 읽는 방식과 연결되어 있기 때문에, 가능하면 수정하지 않는 것이 안전합니다.
+- 이 형식은 backend 코드가 AI 응답을 읽는 방식과 연결되어 있기 때문에, 가능하면 수정하지 않는 것이 안전합니다. 다만 AI가 반환하는 정보의 종류를 변경하거나(예: explanation, difficulty 등 추가), 분석 단위를 바꾸고 싶은 경우에는 JSON 구조를 수정하고 backend 코드도 함께 수정해야 합니다.
 
 ### 6.1.4 수정 후 확인 방법
 - 프롬프트를 수정한 뒤에는 다음과 같이 확인할 수 있습니다.
   - `prompt.py` 파일을 저장합니다.
-  - 웹앱 페이지로 돌아갑니다.
+  - 브라우저의 web application 페이지로 돌아갑니다.
   - 브라우저를 새로고침(refresh) 합니다.
-  - 새로운 문장을 입력하고 AI 분석 결과가 달라졌는지 확인합니다.
+  - 새롭게 문장을 입력하고 AI 분석 결과가 달라졌는지 확인합니다.
 
 ## 6.2 frontend/main.jsx
 - 이 파일은 사용자가 실제로 보게 되는 **웹페이지의 주요 화면**을 담당합니다.
@@ -403,19 +397,21 @@ PROMPT = """
 ## 6.4 backend/llm.py
 
 - 이 파일은 **AI 모델과 실제로 통신하여 분석을 수행하는 코드**를 포함하고 있습니다 즉, 사용자가 웹 인터페이스에서 글을 입력하면 이 파일이 AI 모델을 호출하여 결과를 받아옵니다.
+
 - 이 파일을 수정하면 다음과 같은 부분을 변경할 수 있습니다.
   - 사용하는 AI 모델 종류
   - 모델 응답 처리 방식
   - JSON 결과 처리 방식
   - 오류 처리 방식
-- 특히 다음 부분에서 사용할 AI 모델을 지정합니다.
 
+- 특히 다음 부분에서 사용할 AI 모델을 지정합니다.
 ```python
 response = ollama.chat(
     model="gpt-oss:20b",
     messages=[{"role": "user", "content": input_text}]
 )
 ```
+
 - [다운로드한](#133-모델-다운로드-중요) 다른 모델을 사용하고 싶다면 `model=` 부분의 이름을 변경하면 됩니다.
 ```python
 response = ollama.chat(
@@ -423,10 +419,12 @@ response = ollama.chat(
     messages=[{"role": "user", "content": input_text}]
 )
 ```
-## 6.5 frontend/index.html
+
+## 6.5 frontend/index
+
 - 이 파일은 웹페이지의 기본 틀을 담당합니다.
-- 예를 들어 Chrome 탭 위에 보이는 제목이 이 파일에서 정해집니다.
-```html
+- 예를 들어 Chrome으로 웹페이지를 열었다면, 탭 위에 보이는 제목이 이 파일에서 정해집니다.
+```
 <title>English Vocabulary Interface</title>
 ```
 
@@ -441,6 +439,7 @@ response = ollama.chat(
 ```
 Ctrl + S
 ```
+
 - Mac
 ```
 Cmd + S
@@ -455,6 +454,7 @@ Cmd + S
 ```
 Ctrl + R
 ```
+
 - Mac
 ```
 Cmd + R
