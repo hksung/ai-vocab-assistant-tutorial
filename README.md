@@ -431,7 +431,7 @@ response = ollama.chat(
 )
 ```
 
-## 6.5 frontend/index
+## 6.5 frontend/index.html
 
 - 이 파일은 웹페이지의 기본 틀을 담당합니다.
 - 예를 들어 Chrome으로 웹페이지를 열었다면, 탭 위에 보이는 제목이 이 파일에서 정해집니다. 
