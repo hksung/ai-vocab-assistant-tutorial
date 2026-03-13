@@ -2,19 +2,30 @@
 
 ## 한글 설명
 
-이 튜토리얼은 [Vocabulary assitant web application](https://huggingface.co/spaces/hksung/english-vocab-interface-test)을 로컬 컴퓨터에서 실행하고 수정하는 방법을 단계별로 설명합니다. 
-
-이 튜토리얼에서 설명하는 내용은 다음과 같습니다.
+이 튜토리얼은 [Vocabulary assitant web application](https://huggingface.co/spaces/hksung/english-vocab-interface-test)을 로컬 컴퓨터에서 실행하고 수정하는 방법을 단계별로 설명합니다.이 튜토리얼에서 설명하는 내용은 다음과 같습니다.
 
 1. [필요한 프로그램 설치](#1-필요한-프로그램-설치)
     - [Python 설치](#11-python-설치)
     - [코드 편집기 설치](#12-코드-편집기-설치)
     - [Ollama 설치](#13-ollama-설치)
-2. GitHub에서 프로젝트 다운로드
-3. Python 환경 설정
-4. 프로젝트 실행
-5. AI 프롬프트 수정
-6. 웹 인터페이스 수정
+2. [프로젝트 다운로드 및 열기](#2-프로젝트-다운로드-및-열기)
+    - [Github에서 다운로드](#21-github에서-다운로드)
+    - [프로젝트 폴더 열기](#22-프로젝트-폴더-열기)
+3. [Python 환경 설정 (권장)](#3-python-가상환경-만들기-권장)
+4. [필요한 패키지 설치](#4-필요한-패키지-설치)
+5. [프로젝트 실행](#5-프로젝트-실행)
+    - [폴더 이동](#51-backend-폴더로-이동)
+    - [프로그램 실행](#52-프로그램-실행)
+    - [웹 브라우저에서 열기](#53-웹-브라우저에서-열기)
+    - [프로그램 종료](#54-프로그램-종료)
+6. [프로젝트 구조 이해](#6-프로젝트-구조-이해)
+    - [prompt.py](#61-backendpromptpy-)★
+    - [main.jsx](#62-frontendmainjsx)
+    - [styles.css](#63-frontendstylescss)
+    - [llm.py](#64-backendllmpy)
+7. [확인 사항](#7-확인-사항)
+    - [파일 저장](#71-파일-저장)
+    - [변경 내용 확인](#72-변경-내용-확인)
 
 ---
 
@@ -59,7 +70,6 @@ python3 --version
 ```
 버전 번호가 출력되면 정상적으로 설치된 것입니다.
 
----
 
 ## 1.2 코드 편집기 설치 
 
@@ -73,7 +83,6 @@ python3 --version
     - Notepad++
     - 기본 텍스트 편집기 (TextEdit, Notepad 등)
 
----
 
 ## 1.3 Ollama 설치
 
@@ -107,443 +116,358 @@ ollama run gpt-oss:20b
 - 모델 크기가 크기 때문에 다운로드에 몇 분 정도 걸릴 수 있습니다.
 - 다운로드가 완료되면 모델이 실행됩니다. (이 과정은 처음 한 번만 필요합니다.)
 - `gpt-oss:20b` 모델은 로컬 컴퓨터에서 실행되기 때문에 API 키나 비용이 필요하지 않습니다.
-- Ollama에서는 [다른 모델](https://ollama.com/search)도 사용할 수 있습니다. 예를 들어
+- 참고: Ollama에서는 [다른 모델](https://ollama.com/search)도 사용할 수 있습니다. 예를 들어, llama3를 사용해보고 싶다면, 다음과 다운로드할 수 있습니다.
 
 ```bash
 ollama run llama3
 ```
 
-또는
+---
+
+# 2. 프로젝트 다운로드 및 열기
+## 2.1. Github에서 다운로드
+  - GitHub [repository 페이지](https://github.com/hksung/ai-vocab-assistant-tutorial)로 이동합니다.
+  - 파란색 *Code* 버튼을 클릭합니다.
+  - *Download ZIP*을 선택합니다.
+  - 다운로드된 ZIP 파일을 압축 해제합니다.
+ ![alt text](./images/image.png)
+  - 다운로드한 폴더를 내 컴퓨터에서 원하는 위치 (예: Desktop, Documents)로 이동합니다.
+
+## 2.2 프로젝트 폴더 열기
+  - 이제 다운로드한 프로젝트 폴더를 코드 편집기(code editor)에서 엽니다.
+  - [여기](#12-코드-편집기-설치)에서 다룬 것처럼, 어떤 편집기를 사용해도 괜찮지만 기본적으로 다음과 같은 방식으로 프로젝트 폴더 전체를 열 수 있습니다.
+    - 코드 편집기를 실행합니다.
+    - 메뉴에서 **Open Folder** 또는 **Open Project** 를 선택합니다.
+    - 다운로드한 프로젝트 폴더를 선택합니다.
+  - 예를 들어, VS Code 실행해서 폴더를 열면 다음과 같이 파일 구조가 보입니다.
+![alt text](./images/image-1.png)
+
+---
+
+# 3. Python 가상환경 만들기 (권장)
+- 프로젝트마다 Python 환경을 따로 만드는 것이 좋습니다.
+
+## 3.1 Windows
+
+### 3.1.1. Command prompt 열기
+  - 시작 메뉴(Start)를 클릭합니다.
+  - Command Prompt 또는 cmd 를 검색합니다.
+  - 프로그램을 실행합니다.
+  - 또는 `Windows 키 + R → cmd 입력 → Enter`
+
+### 3.1.2. 프로젝트 폴더로 이동
+- 프로젝트 폴더가 있는 위치로 이동합니다. 
+- 예를 들어, Desktop에 해당 폴더가 있는 경우:
 
 ```bash
-ollama run mistral
+cd Desktop\ai-vocab-assistant-tutorial
 ```
 
----
-
-# 2. GitHub에서 프로젝트 다운로드
-
-1. GitHub repository 페이지로 이동합니다.
-    - https://github.com/hksung/ai-vocab-assistant-tutorial
-2. 초록색 **Code** 버튼을 클릭합니다.
-
-3. **Download ZIP**을 선택합니다.
-
-4. 다운로드된 ZIP 파일을 **압축 해제**합니다.
-
-예
-
-```
-Downloads
-→ ai-vocab-tool-main
-```
-
-5. 이 폴더를 Desktop 또는 Documents로 이동합니다.
-
----
-
-# 3. VS Code에서 프로젝트 열기
-
-1. Visual Studio Code 실행
-
-2. 메뉴에서
-
-```
-File → Open Folder
-```
-
-3. 다운로드한 프로젝트 폴더 선택
-
-예
-
-```
-ai-vocab-tool-main
-```
-
-왼쪽에 다음과 같은 폴더가 보이면 정상입니다.
-
-```
-backend
-frontend
-requirements.txt
-```
-
----
-
-# 4. Python 가상환경 만들기
-
-프로젝트마다 Python 환경을 따로 만드는 것이 좋습니다.
-
-VS Code에서 **Terminal**을 엽니다.
-
-```
-Terminal → New Terminal
-```
-
-### 가상환경 생성
-
-Mac / Linux
-
-```bash
-python3 -m venv .venv
-```
-
-Windows
+### 3.1.3. 가상환경 생성
+- 다음 명령어를 입력합니다.
 
 ```bash
 python -m venv .venv
 ```
 
----
+- 이 명령어는 `.venv`라는 가상환경 폴더를 생성합니다.
 
-### 가상환경 활성화
-
-Mac / Linux
-
-```bash
-source .venv/bin/activate
-```
-
-Windows
+### 3.1.4. 가상환경 활성화
+- 다음 명령어를 입력합니다.
 
 ```bash
 .venv\Scripts\activate
 ```
-
-성공하면 터미널 앞에 다음과 같은 표시가 나타납니다.
+- 성공하면 터미널 앞에 다음과 같은 표시가 나타납니다.
 
 ```
 (.venv)
 ```
+- 이 표시가 보이면 가상환경이 정상적으로 활성화된 것입니다.
+
+## 3.2 Mac
+
+### 3.2.1. Terminal 열기
+- `Command + Space` 를 누릅니다.
+- **Terminal**을 검색합니다.
+- Terminal을 실행합니다.
+
+### 3.2.2. 프로젝트 폴더로 이동
+- 예를 들어, Desktop에 해당 폴더가 있는 경우:
+
+```bash
+cd Desktop/ai-vocab-assistant-tutorial
+```
+
+### 3.2.3. 가상환경 생성
+- 다음 명령어를 입력합니다.
+
+```bash
+python3 -m venv .venv
+```
+- 이 명령어는 `.venv`라는 가상환경 폴더를 생성합니다.
+
+### 3.2.4. 가상환경 활성화
+- 다음 명령어를 입력합니다.
+
+```bash
+source .venv/bin/activate
+```
+- 성공하면 터미널 앞에 다음과 같은 표시가 나타납니다.
+```
+(.venv)
+```
+- 이 표시가 보이면 가상환경이 정상적으로 활성화된 것입니다.
 
 ---
 
-# 5. 필요한 패키지 설치
+# 4. 필요한 패키지 설치
 
-프로젝트에 필요한 Python 패키지를 설치합니다.
+- 이제 프로젝트에 필요한 Python 패키지를 설치합니다.
+- 3번 단계에서 열었던 Command Prompt (Windows) 또는 Terminal (Mac)을 그대로 사용합니다.
+  - 가상환경을 사용한다면, 가상환경이 활성화되어 있는지 다시 확인해보세요.
+  - 현재 터미널이 프로젝트 폴더 안에 있는지 확인합니다. 예를 들어, Windows의 경우는 `dir`, Mac의 경우는 `ls` 라고 터미널에서 명령어를 입력했을 때, 다음과 같은 파일이 보이면 올바른 폴더에 있는 것입니다. 보이지 않는다면, [프로젝트 폴더로 이동](#322-프로젝트-폴더로-이동)해야 합니다.
+```
+backend
+frontend
+requirements.txt
+README.md
+```
+- 그 다음 다음 명령어를 입력합니다.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-설치에는 몇 분 정도 걸릴 수 있습니다.
+- 이 명령어는 `requirements.txt` 파일에 있는 Python 패키지들을 자동으로 설치합니다. 설치에는 몇 분 정도 걸릴 수 있습니다.
+
+## 참고
+- 일부 Mac 환경에서는 다음 명령어를 사용할 수도 있습니다.
+```bash
+pip3 install -r requirements.txt
+```
+- 하지만 가상환경이 활성화된 상태에서는 대부분 `pip` 명령어만 사용해도 정상적으로 작동합니다.
 
 ---
 
-# 6. 프로젝트 실행
+# 5. 프로젝트 실행
 
-이 프로젝트는 **backend 폴더에서 실행해야 합니다.**
-
-터미널에서 다음을 실행합니다.
-
+## 5.1. backend 폴더로 이동
+- 프로그램을 내 컴퓨터에서 실행하기 위해 모든 준비가 끝났습니다.
+- 이 프로젝트는 *backend* 폴더에서 실행해야 합니다. 따라서 우선 터미널에서 backend 폴더로 이동하겠습니다.
+- 이 명령어는 현재 위치에서 *backend* 폴더로 이동하는 명령어입니다.
 ```bash
 cd backend
 ```
+또는 폴더 위치를 전체를 주고 이동할 수도 있습니다.
+```bash
+cd Desktop\ai-vocab-assistant-tutorial\backend
+```
 
-서버 실행
+## 5.2. 프로그램 실행
+- 이제 다음 명령어를 입력합니다.
 
 ```bash
 uvicorn main:app --reload
 ```
-
-정상적으로 실행되면 다음 메시지가 나타납니다.
+- 이 명령어는 웹 애플리케이션 서버를 실행하는 명령어입니다.
+- 정상적으로 실행되면 터미널에 다음과 비슷한 메시지가 나타납니다.
 
 ```
 Uvicorn running on http://127.0.0.1:8000
 ```
+- 이 메시지가 보이면 프로그램이 정상적으로 실행된 것입니다.
 
-브라우저에서 다음 주소를 열면 웹 인터페이스가 나타납니다.
+## 5.3 웹 브라우저에서 열기
+
+- 이제 웹 브라우저를 (예: Chrome, Edge, Safari 등) 엽니다.
+- 브라우저 주소창에 터미널에서 받은 주소를 입력합니다.
 
 ```
 http://127.0.0.1:8000
 ```
+- Enter를 누르면 Vocabulary Assistance 웹 인터페이스가 화면에 나타납니다.
+
+## 5.4 프로그램 종료
+- 프로그램을 종료하려면 터미널에서 `Ctrl + C` 를 누르면 됩니다.
+
+## 5.5 결과 파일 저장 위치
+
+- 웹앱에서 글을 분석하고 결과를 `저장`하면, 그 결과는 자동으로 파일로 저장됩니다.
+- 저장 위치: "saved/" 
+- 이 폴더 안에는 다음과 같은 파일이 생성됩니다. (e.g., *session_0.json*)
 
 ---
 
-# 7. 프로젝트 파일 구조 이해하기
+# 6. 프로젝트 구조 이해
 
-이 프로젝트에서 중요한 파일은 다음과 같습니다.
+- 이제 어떤 파일을 수정하면 웹앱의 어느 부분이 바뀌는지 알아보겠습니다.
+- 이 프로젝트에서 주로 보게 될 파일은 다음 5개입니다.
 
-```
+```text
 backend/prompt.py
+backend/llm.py
 frontend/main.jsx
 frontend/styles.css
 frontend/index.html
 ```
 
-각 파일의 역할
+<img src="./images/image-2.png" width="200">
 
-### backend/prompt.py
+- 이 튜토리얼에서 가장 중요한 파일은 `prompt.py`입니다. 따라서 먼저 이 파일의 사용 방법을 자세히 설명하고, 나머지 네 파일은 비교적 간단히 소개하겠습니다.
 
-AI가 어떤 방식으로 글을 분석할지 정의하는 **프롬프트 파일**
+## 6.1 backend/prompt.py (★)
+- 이 파일은 AI에게 어떤 방식으로 답변할지 지시하는 **프롬프트(prompt)** 를 담고 있습니다.
+- 예를 들어, 이 파일을 수정하면 다음과 같은 부분이 달라질 수 있습니다.
+  - AI가 더 친절한 말투로 설명하도록 만들기
+  - 더 엄격하게 단어를 선택하도록 만들기
+  - 더 학술적인 단어를 추천하도록 만들기
+  - 더 쉬운 단어를 추천하도록 만들기
+  - 추천 기준을 바꾸기 (예: 더 적은 단어 수정, 더 많은 단어 수정)
 
----
+### 6.1.1. 현재 구조
+- 현재 `prompt.py` 파일에는 다음과 같은 프롬프트가 들어 있습니다.
+- 다운로드 했던 [코드 편집기](#12-코드-편집기-설치)로 열고 수정할 수 있습니다.
+![alt text](./images/image-3.png)
 
-### frontend/main.jsx
-
-사용자가 보는 **화면 텍스트와 버튼**
-
----
-
-### frontend/styles.css
-
-웹페이지 **디자인 (색상, 폰트, 버튼 스타일)**
-
----
-
-### frontend/index.html
-
-웹페이지 **기본 구조와 브라우저 탭 제목**
-
----
-
-# 8. AI 프롬프트 수정하기
-
-AI가 어떤 방식으로 단어를 제안할지 바꾸려면
-
-```
-backend/prompt.py
-```
-
-파일을 엽니다.
-
-예시 코드
-
-```python
-PROMPT = """
+### 6.1.2. 수정 예시
+#### 6.1.2.1. AI의 역할 설명
+- 예를 들어, 다음 부분을 수정할 수 있습니다.
+```text
 You are a writing assistant helping a learner revise vocabulary in an English essay.
-"""
 ```
+- 수정 예시
+```text
+You are an academic writing assistant helping students improve vocabulary in university-level essays.
+```
+- 이렇게 바꾸면 AI의 기준이 "university-level"로 달라질 수 있습니다.
 
-`""" """` 사이의 텍스트를 수정하면 됩니다.
+### 6.1.2.2. 추천 단어의 기준 변경
+- 예를 들어, 다음 부분을 수정할 수 있습니다.
+```text
+Avoid rare or technical words that would sound unnatural in a typical university essay.
+```
+- 수정 예시
+```text
+Prefer vocabulary that sounds natural to native speakers in daily conversation.
+```
+- 이렇게 수정하면 AI가 추천하는 단어의 사용 맥락이 달라질 수 있습니다.
 
-예
+### 6.1.3 수정할 때 주의할 점
+- 다음 부분은 수정하지 않는 것을 권장합니다.
+
+#### 6.1.3.1. prompt 구조
+- 다음 구조는 반드시 유지해야 합니다.
 
 ```python
-PROMPT = """
-You are a supportive writing assistant helping a student improve vocabulary in an English essay.
-
-The writer is an English learner. Suggest helpful vocabulary alternatives that are clear and natural.
-"""
-```
-
-주의사항
-
-다음 구조는 삭제하면 안 됩니다.
-
-```
-PROMPT =
-"""
-"""
-```
-
-또한 JSON 출력 형식은 그대로 유지하는 것이 좋습니다.
-
----
-
-# 9. 인터페이스 텍스트 수정하기
-
-사용자가 보는 텍스트는 다음 파일에서 수정합니다.
-
-```
-frontend/main.jsx
-```
-
-예
-
-기존 코드
-
-```jsx
-<h1>English Vocabulary Interface</h1>
-```
-
-수정
-
-```jsx
-<h1>My Writing Support Tool</h1>
-```
-
-또는 버튼 텍스트 수정
-
-```jsx
-<button>Next</button>
-```
-
-→
-
-```jsx
-<button>Start</button>
-```
-
----
-
-# 10. 디자인 수정하기
-
-웹페이지 색상은 다음 파일에서 수정합니다.
-
-```
-frontend/styles.css
-```
-
-예
-
-기존 코드
-
-```css
-button {
-  background: #7C878E;
-  color: white;
-}
-```
-
-수정
-
-```css
-button {
-  background: #2f6f4f;
-  color: white;
-}
-```
-
-수정 가능한 요소
-
-```
-body        페이지 배경
-button      버튼 색상
-.highlight  강조된 단어
-.applied    수정된 단어
-```
-
----
-
-# 11. 브라우저 탭 제목 변경
-
-파일
-
-```
-frontend/index.html
-```
-
-기존
-
-```html
-<title>English Vocabulary Interface</title>
-```
-
-수정
-
-```html
-<title>Writing Support Demo</title>
-```
-
----
-
-# 12. 파일 저장
-
-파일을 수정할 때마다 저장해야 합니다.
-
-Mac
-
-```
-Cmd + S
-```
-
-Windows
-
-```
-Ctrl + S
-```
-
----
-
-# 13. 변경 내용 확인
-
-서버가 실행 중이면
-
-```
-http://127.0.0.1:8000
-```
-
-을 새로고침하면 변경 내용을 확인할 수 있습니다.
-
----
-
-# 14. 자주 발생하는 실수
-
-### 폴더 이름 변경
-
-다음 폴더 이름은 변경하지 않습니다.
-
-```
-backend
-frontend
-```
-
----
-
-### 코드 기호 삭제
-
-다음 기호를 실수로 삭제하면 프로그램이 작동하지 않을 수 있습니다.
-
-```
-"
-'
-{}
-[]
-,
-```
-
----
-
-### prompt.py 수정 시
-
-다음 구조는 반드시 유지해야 합니다.
-
-```
 PROMPT = """
 ...
 """
 ```
+- 특히 다음을 삭제하지 않도록 주의하세요.
+
+* `PROMPT =`
+* 여는 `"""`
+* 닫는 `"""`
+
+#### 6.1.3.2. 출력 구조
+- 프롬프트 아래쪽에는 AI가 출력해야 하는 JSON 형식 예시가 포함되어 있습니다. 
+- 이 형식은 backend 코드가 AI 응답을 읽는 방식과 연결되어 있기 때문에, 가능하면 수정하지 않는 것이 안전합니다.
+
+### 6.1.4 수정 후 확인 방법
+- 프롬프트를 수정한 뒤에는 다음과 같이 확인할 수 있습니다.
+  - `prompt.py` 파일을 저장합니다.
+  - 웹앱 페이지로 돌아갑니다.
+  - 브라우저를 새로고침(refresh) 합니다.
+  - 새로운 문장을 입력하고 AI 분석 결과가 달라졌는지 확인합니다.
+
+## 6.2 frontend/main.jsx
+- 이 파일은 사용자가 실제로 보게 되는 **웹페이지의 주요 화면**을 담당합니다.
+- 이 파일을 수정하면 다음과 같은 부분이 바뀝니다.
+  - 제목
+  - 설명 문구
+  - 버튼 글자
+  - 입력창 안내 문구
+  - 화면에 보이는 일부 구성 요소
+
+## 6.3 frontend/styles.css
+- 이 파일은 웹페이지의 **디자인과 꾸미기**를 담당합니다.
+- 이 파일을 수정하면 다음과 같은 부분이 바뀝니다.
+  - 배경색
+  - 버튼 색상
+  - 글자 크기
+  - 여백
+  - 강조 표시 색상
+  - 단어 수정 후 보이는 스타일
+
+## 6.4 backend/llm.py
+
+- 이 파일은 **AI 모델과 실제로 통신하여 분석을 수행하는 코드**를 포함하고 있습니다 즉, 사용자가 웹 인터페이스에서 글을 입력하면 이 파일이 AI 모델을 호출하여 결과를 받아옵니다.
+- 이 파일을 수정하면 다음과 같은 부분을 변경할 수 있습니다.
+  - 사용하는 AI 모델 종류
+  - 모델 응답 처리 방식
+  - JSON 결과 처리 방식
+  - 오류 처리 방식
+- 특히 다음 부분에서 사용할 AI 모델을 지정합니다.
+
+```python
+response = ollama.chat(
+    model="gpt-oss:20b",
+    messages=[{"role": "user", "content": input_text}]
+)
+```
+- [다운로드한](#133-모델-다운로드-중요) 다른 모델을 사용하고 싶다면 `model=` 부분의 이름을 변경하면 됩니다.
+```python
+response = ollama.chat(
+    model="llama3",
+    messages=[{"role": "user", "content": input_text}]
+)
+```
+## 6.5 frontend/index.html
+- 이 파일은 웹페이지의 기본 틀을 담당합니다.
+- 예를 들어 Chrome 탭 위에 보이는 제목이 이 파일에서 정해집니다.
+```html
+<title>English Vocabulary Interface</title>
+```
 
 ---
 
-# 15. 간단 요약
+# 7. 확인 사항
+코드를 수정하기 전에 다음 사항을 기억하세요.
 
-가장 기본적인 실행 방법
-
-1. Python 설치
-2. VS Code 설치
-3. GitHub repository 다운로드
-4. VS Code에서 폴더 열기
-5. 가상환경 생성
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+## 7.1. 파일 저장
+- 코드를 수정한 뒤에는 반드시 파일을 저장해야 합니다.
+- Windows
 ```
-
-6. 서버 실행
-
-```bash
-cd backend
-uvicorn main:app --reload
+Ctrl + S
 ```
+- Mac
+```
+Cmd + S
+```
+- 저장하지 않으면 변경 내용이 프로그램에 반영되지 않습니다.
 
-7. 브라우저에서 실행
+## 7.2. 변경 내용 확인
+- 프로그램이 이미 실행 중이라면 다음 방법으로 변경 내용을 확인할 수 있습니다.
+  - 웹 브라우저에서 웹앱 페이지를 엽니다.
+  - 새로고침 (refresh) 을 합니다.
+- Windows
+```
+Ctrl + R
+```
+- Mac
+```
+Cmd + R
+```
+- 분석 전후로 같은 글을 입력하여 분석 결과가 달라졌는지 확인해보세요.
 
-```
-http://127.0.0.1:8000
-```
+## 7.3. backend 코드를 수정했는데 바뀌지 않는 경우
+- `prompt.py` 또는 `llm.py` 같은 backend 파일을 수정했는데 결과가 바뀌지 않을 수도 있습니다.
+- 이 경우 서버를 종료한 후 다시 실행하면 됩니다.
+  - 서버 종료를 원하는 경우: `Ctrl+c`
+  - 서버 [다시 실행](#52-프로그램-실행)
 
-8. 다음 파일을 수정하면 기능과 디자인을 변경할 수 있습니다.
+---
 
-```
-backend/prompt.py
-frontend/main.jsx
-frontend/styles.css
-frontend/index.html
-```
-
-```
-```
+- 본 튜토리얼과 코드는 Hakyung Sung (hksgla@rit.edu)과 Sam Moll (sjm9591@rit.edu)이 RIT에서 개발하였습니다.
+- 본 자료는 교육 목적으로 제공됩니다.
