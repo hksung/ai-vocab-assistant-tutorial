@@ -1,4 +1,4 @@
-# Vocabulary Assistant Web App 로컬 실행 및 수정 튜토리얼
+# AI Assistant Web App 로컬 실행 및 수정 튜토리얼
 
 이 튜토리얼은 <a href="https://huggingface.co/spaces/hksung/english-vocab-interface-test" target="_blank">Vocabulary assistant web application</a>을 로컬 컴퓨터에서 실행하고 수정하는 방법을 단계별로 설명합니다. 튜토리얼에서 설명하는 내용은 다음과 같습니다.
 
