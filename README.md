@@ -75,13 +75,7 @@ python3 --version
 이 프로젝트의 파일을 수정하려면 **코드 편집기(code editor)** 가 필요합니다. 흔히 많이 사용하는 무료 편집기는 Visual Studio Code (VS Code)입니다.
 - 다운로드: [https://code.visualstudio.com/](https://code.visualstudio.com/)
 - 설치 후 프로그램을 실행합니다.
-- 이미 다른 코드 편집기를 사용하고 있다면 그대로 사용해도 괜찮습니다. 예를 들어 다음과 같은 프로그램을 사용할 수 있습니다.
-    - PyCharm
-    - Cursor
-    - Sublime Text
-    - Notepad++
-    - 기본 텍스트 편집기 (TextEdit, Notepad 등)
-
+- 이미 다른 코드 편집기 (e.g., PyCharm) 를 사용하고 있다면 그대로 사용해도 괜찮습니다.
 
 ## 1.3 Ollama 설치
 
