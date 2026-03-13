@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Web app
 ---
 
 {% include_relative README.md %}

@@ -478,7 +478,7 @@ Cmd + R
 
 ---
 
-### About this tutorial
+# About this tutorial
 
-- This tutorial and the accompanying code were developed by Hakyung Sung (hksgla@rit.edu) and Sam Moll (sjm9591@rit.edu) at RIT.
+- This tutorial and the accompanying code were developed by Hakyung Sung and Sam Moll at RIT.
 - This material is provided only for educational purposes.
