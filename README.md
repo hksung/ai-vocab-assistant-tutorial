@@ -332,13 +332,13 @@ You are an English teacher helping an elementary school student improve vocabula
 ```text
 You are an English teacher helping a student correct grammatical errors in an essay.
 ```
-- 이 경우 AI는 어휘보다는 문법 오류와 문장 구조 수정에 더 집중할 수 있습니다.
+- 이 경우 AI는 어휘보다는 문법 오류와 문장 구조 수정에 더 집중할 가능성이 높습니다.
 
 - 수정 예시 3
 ```text
 You are a writing tutor giving feedback on the ideas and organization of an essay.
 ```
-- 이 경우 AI는 단어 수정보다 아이디어 구성, 논리 흐름, 글의 구조에 대한 피드백을 제공할 수 있습니다.
+- 이 경우 AI는 단어 수정보다 아이디어 구성, 논리 흐름, 글의 구조에 대한 피드백을 제공할 가능성이 높습니다.
 
 ### 6.1.2.2. 추천 단어의 기준 변경
 
@@ -351,6 +351,27 @@ Avoid rare or technical words that would sound unnatural in a typical university
 Prefer vocabulary that sounds natural to native speakers in daily conversation.
 ```
 - 이렇게 수정하면 AI가 추천하는 단어의 사용 맥락이 달라질 수 있습니다.
+
+☑ Tips
+- 위의 예시는 AI가 어떤 방향으로 반응할 수 있는지를 보여주는 예입니다.
+  - 실제 AI의 응답은 사용하는 모델, 설정, 입력한 문장 등에 따라 달라질 수 있습니다.
+  - 따라서 프롬프트를 특정한 방향으로 수정한다고 해서 항상 원하는 결과가 나오는 것은 아닙니다.
+  - 프롬프트를 수정한 뒤에는 직접 실행해 보고 결과를 확인해 보는 것이 좋습니다.
+- 원하는 결과의 예시(example)를 함께 제시하면 AI가 그 패턴을 참고하여 비슷한 방식으로 응답을 생성하는 데 도움이 될 수 있습니다.
+  - 예를 들어 다음과 같이 수정 방식의 예시를 먼저 보여줄 수 있습니다.
+  ```text
+  You are an English teacher helping a student improve vocabulary in an essay.
+
+  Example
+
+  Original: The movie was very good.
+  Suggestion: The movie was excellent.
+
+  Original: The problem is very big.
+  Suggestion: The problem is serious.
+
+  Now suggest improved vocabulary for the following essay.
+  ```
 
 ### 6.1.3 수정할 때 주의할 점
 - 다음 부분은 수정하지 않는 것을 권장합니다.
