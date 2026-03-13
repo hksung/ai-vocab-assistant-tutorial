@@ -1,0 +1,195 @@
+.highlight {
+  background-color: #fff3a0; 
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.applied {
+  background-color: #c6f6d5;
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.highlight:hover,
+.applied:hover {
+  outline: 2px solid #999;
+}
+
+.text {
+  margin-top: 20px;
+  white-space: pre-wrap;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* font-family: "Nunito", "Segoe UI", sans-serif; */
+  font-family: sans-serif, Arial, Helvetica;
+
+  background-color: #fafafa;
+}
+
+header {
+  text-align: center;
+  padding: 15px 0;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: white;
+  border-bottom: 0px solid #D0D3D4;
+  background: #7C878E;
+}
+
+footer {
+  border-top: 2px solid #ddd;
+  padding: 12px 0;
+  text-align: center;
+  background: #fafafa;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+}
+
+textarea {
+  width: 100%;
+  height: 350px;
+  resize: none; 
+  padding: 14px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: none;
+  outline: none;
+  background: white;
+  box-shadow: 0 0 0 1px #ddd;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.text {
+  width: 100%;
+  height: 350px;
+  padding: 14px;
+  font-size: 1rem;
+  line-height: 1.5;
+  background: white;
+  box-shadow: 0 0 0 1px #ddd;
+  box-sizing: border-box;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  border: none;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+
+.text[readonly] {
+  cursor: default;
+}
+
+button {
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background: #7C878E;
+  color: white;
+  border-radius: 4px;
+}
+
+button:hover {
+  background: #7C878E;
+}
+
+.popup {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 6px;
+  margin-top: 4px;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.popup button {
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+  background: #f3f4f6;
+  color: #111;
+}
+
+.popup button:hover {
+  background: #e5e7eb;
+}
+
+.centered * {
+  margin: 7px 0;
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
+}
+
+.centered p {
+  padding: 15px;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.centered input {
+  margin: 8px 0;
+  padding: 10px;
+  width: 250px;
+}
+
+.centered button {
+  margin-top: 16px;
+}
+
+.textarea-container {
+  position: relative;
+}
+
+.word-counter {
+  position: absolute;
+  bottom: -10px;
+  right: 12px;
+  font-size: 0.85rem;
+  color: #666;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.word-counter.limit {
+  color: red;
+  font-weight: 400;
+}
