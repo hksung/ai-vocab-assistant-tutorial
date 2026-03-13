@@ -219,8 +219,8 @@ frontend
 requirements.txt
 README.md
 ```
-- 그 다음 다음 명령어를 입력합니다.
 
+- 그 다음 다음 명령어를 입력합니다.
 ```bash
 pip install -r requirements.txt
 ```
@@ -239,7 +239,6 @@ pip3 install -r requirements.txt
 - Web application을 내 컴퓨터에서 실행하기 위해 모든 준비가 끝났습니다.
 - 프로그램은 `backend` 폴더에서 실행해야 합니다. 따라서 우선 Command Prompt 혹은 PowerShell (Windows) 또는 Terminal (Mac)에서 `backend` 폴더로 이동하겠습니다.
 - 이 명령어는 현재 위치(다운받은 GitHub repository 폴더에 있다고 가정)에서 `backend` 폴더로 이동하는 명령어입니다.
-
 ```bash
 cd backend
 ```
@@ -251,26 +250,26 @@ cd Desktop\ai-vocab-assistant-tutorial\backend
 
 ## 5.2. 프로그램 실행
 - 이제 다음 명령어를 입력합니다.
-
 ```bash
 uvicorn main:app --reload
 ```
+
 - 이 명령어는 웹 애플리케이션 서버를 실행하는 명령어입니다.
 - 정상적으로 실행되면 터미널에 다음과 비슷한 메시지가 나타납니다.
-
 ```
 Uvicorn running on http://127.0.0.1:8000
 ```
+
 - 이 메시지가 보이면 프로그램이 정상적으로 실행된 것입니다.
 
 ## 5.3 웹 브라우저에서 열기
 
 - 이제 웹 브라우저를 (예: Chrome, Edge, Safari 등) 엽니다.
 - 브라우저 주소창에 터미널에서 받은 주소를 입력합니다.
-
 ```
 http://127.0.0.1:8000
 ```
+
 - Enter를 누르면 Vocabulary Assistance 웹 인터페이스가 화면에 나타납니다.
 
 ## 5.4 프로그램 종료
@@ -280,12 +279,12 @@ http://127.0.0.1:8000
 
 - Web application 에서 글을 분석하고 결과를 `저장`하면, 그 결과는 자동으로 파일로 내 컴퓨터에 저장됩니다.
 
-<img src="./images/image-4.png" width="200">
-<img src="./images/image-5.png" width="200">
+<img src="./images/image-4.png" width="300">
+<img src="./images/image-5.png" width="300">
 
 - 저장 위치는 다운받은 GitHub repository 안의 "saved/" 폴더입니다. 예를 들어, 다음과 같은 파일이 생성됩니다. (e.g., *session_0.json*)
 
-<img src="./images/image-6.png" width="200">
+<img src="./images/image-6.png" width="300">
 
 - 본 튜토리얼의 핵심 목적은 아니지만, 이렇게 결과를 파일로 저장해 두면 이후에 분석 결과를 다시 확인하거나, 여러 사용자 데이터를 모아 추가적인 분석이나 연구 자료로 활용할 수 있습니다.
 
@@ -303,7 +302,7 @@ frontend/styles.css
 frontend/index.html
 ```
 
-<img src="./images/image-2.png" width="200">
+<img src="./images/image-2.png" width="250">
 
 - 이 튜토리얼에서 가장 중요한 파일은 `prompt.py`입니다. 따라서 먼저 이 파일의 사용 방법을 자세히 설명하고, 나머지 네 파일은 비교적 간단히 소개하겠습니다.
 
@@ -329,11 +328,23 @@ frontend/index.html
 ```text
 You are a writing assistant helping a learner revise vocabulary in an English essay.
 ```
-- 수정 예시
+- 수정 예시 1
 ```text
-You are an English teacher helping a high school student improve vocabulary.
+You are an English teacher helping an elementary school student improve vocabulary.
 ```
 - 이렇게 바꾸면 AI는 어려운 어휘 대신 더 쉬운 표현을 제안하는 방향으로 반응할 가능성이 높습니다.
+
+- 수정 예시 2
+```text
+You are an English teacher helping a student correct grammatical errors in an essay.
+```
+- 이 경우 AI는 어휘보다는 문법 오류와 문장 구조 수정에 더 집중할 수 있습니다.
+
+- 수정 예시 3
+```text
+You are a writing tutor giving feedback on the ideas and organization of an essay.
+```
+- 이 경우 AI는 단어 수정보다 아이디어 구성, 논리 흐름, 글의 구조에 대한 피드백을 제공할 수 있습니다.
 
 ### 6.1.2.2. 추천 단어의 기준 변경
 
@@ -376,7 +387,7 @@ PROMPT = """
   - 새롭게 문장을 입력하고 AI 분석 결과가 달라졌는지 확인합니다.
 
 ## 6.2 frontend/main.jsx
-- 이 파일은 사용자가 실제로 보게 되는 **웹페이지의 주요 화면**을 담당합니다.
+- 이 파일은 사용자가 실제로 보게 되는 웹페이지의 주요 화면을 담당합니다.
 - 이 파일을 수정하면 다음과 같은 부분이 바뀝니다.
   - 제목
   - 설명 문구
@@ -385,7 +396,7 @@ PROMPT = """
   - 화면에 보이는 일부 구성 요소
 
 ## 6.3 frontend/styles.css
-- 이 파일은 웹페이지의 **디자인과 꾸미기**를 담당합니다.
+- 이 파일은 웹페이지의 디자인과 꾸미기를 담당합니다.
 - 이 파일을 수정하면 다음과 같은 부분이 바뀝니다.
   - 배경색
   - 버튼 색상
@@ -396,7 +407,7 @@ PROMPT = """
 
 ## 6.4 backend/llm.py
 
-- 이 파일은 **AI 모델과 실제로 통신하여 분석을 수행하는 코드**를 포함하고 있습니다 즉, 사용자가 웹 인터페이스에서 글을 입력하면 이 파일이 AI 모델을 호출하여 결과를 받아옵니다.
+- 이 파일은 AI 모델과 실제로 통신하여 분석을 수행하는 코드를 포함하고 있습니다 즉, 사용자가 웹 인터페이스에서 글을 입력하면 이 파일이 AI 모델을 호출하여 결과를 받아옵니다.
 
 - 이 파일을 수정하면 다음과 같은 부분을 변경할 수 있습니다.
   - 사용하는 AI 모델 종류
@@ -423,10 +434,8 @@ response = ollama.chat(
 ## 6.5 frontend/index
 
 - 이 파일은 웹페이지의 기본 틀을 담당합니다.
-- 예를 들어 Chrome으로 웹페이지를 열었다면, 탭 위에 보이는 제목이 이 파일에서 정해집니다.
-```
-<title>English Vocabulary Interface</title>
-```
+- 예를 들어 Chrome으로 웹페이지를 열었다면, 탭 위에 보이는 제목이 이 파일에서 정해집니다. 
+`<title>English Vocabulary Interface</title>`
 
 ---
 
@@ -469,5 +478,7 @@ Cmd + R
 
 ---
 
-- 본 튜토리얼과 코드는 Hakyung Sung (hksgla@rit.edu)과 Sam Moll (sjm9591@rit.edu)이 RIT에서 개발하였습니다.
-- 본 자료는 교육 목적으로 제공됩니다.
+### About this tutorial
+
+- This tutorial and the accompanying code were developed by Hakyung Sung (hksgla@rit.edu) and Sam Moll (sjm9591@rit.edu) at RIT.
+- This material is provided only for educational purposes.
