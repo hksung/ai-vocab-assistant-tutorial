@@ -7,15 +7,57 @@
 }
 
 .applied {
-  background-color: #c6f6d5;
+  background-color: #ddf6e5;
   cursor: pointer;
   position: relative;
   padding: 2px;
   border-radius: 3px;
 }
 
+.highlight-vocabulary {
+  background-color: #ffe83bf7; /* Brighter yellow for vocabulary suggestions */
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.highlight-grammar {
+  background-color: #90cdf4; /* Brighter blue for grammar suggestions */
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.applied-vocabulary {
+  background-color: #c6f6d5; /* Green for applied vocabulary */
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.applied-grammar {
+  background-color: #b7e69a; /* Light green for applied grammar */
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.highlight-all {
+  background-color: #fff3a0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
 .highlight:hover,
-.applied:hover {
+.applied:hover,
+.highlight-vocab:hover,
+.highlight-grammar:hover,
+.applied-vocab:hover,
+.applied-grammar:hover {
   outline: 2px solid #999;
 }
 
@@ -144,6 +186,53 @@ button:hover {
 
 .popup button:hover {
   background: #e5e7eb;
+}
+
+.explanation {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.secondary-note {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f7fafc;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+}
+
+.secondary-label {
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.secondary-button {
+  display: block;
+  width: 100%;
+  margin: 4px 0;
+  background: #edf2f7;
+  color: #111;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.secondary-button:hover {
+  background: #e2e8f0;
+}
+
+.conflict-note {
+  font-size: 0.85em;
+  color: #2d3748;
+  background: #f7fafc;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 8px;
 }
 
 .centered * {

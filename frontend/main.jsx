@@ -8,36 +8,27 @@ Home Page Component
 function HomePage({ firstName, lastName, setFirstName, setLastName, goNext }) {
   return (
     <div className="centered">
-      <h1>English Vocabulary Interface (Tutorial)</h1>
-
+      <h1>EnglishEdu AI Assistant Web App Interface (Tutorial)</h1>
       <p>
-        이 인터페이스는 영어 글쓰기에서 선택된 일부 단어에 대해 여러 가능한 단어 옵션을 보여줍니다. 문장을 입력하면 글 속의 일부 단어에 대해 여러 단어 옵션이 표시됩니다. This interface displays alternative word options for selected words in an
-        English text. After you enter your text, some words will appear with several possible word options.
-      </p>
-
-
-      <p>
-        실험을 시작하려면 이름과 성을 입력해 주세요.
-        <br />
         Please enter your first and last name to begin.
       </p>
 
       <input
         type="text"
-        placeholder="이름 / First Name"
+        placeholder="First Name"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
       />
 
       <input
         type="text"
-        placeholder="성 / Last Name"
+        placeholder="Last Name"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
       />
 
       <button onClick={goNext} disabled={!firstName || !lastName}>
-        다음 / Next
+        Next
       </button>
     </div>
   );
@@ -71,10 +62,8 @@ function EssayPage({ essay, setEssay, analyze, loading, error }) {
   const wordCount = countWords(essay);
 
 return (
-  <div>
+  <div className={loading ? "highlight-all" : ""}>
     <h2>
-      20분 동안 150–200단어로 에세이를 작성해 주세요.
-      <br />
       Please write a 150–200 word essay within 20 minutes.
     </h2>
 
@@ -82,15 +71,15 @@ return (
         <textarea
           value={essay}
           onChange={handleChange}
-          placeholder="여기에 에세이를 작성해 주세요. / Write your essay here."
+          placeholder="Write your essay here."
         />
         <div className={`word-counter ${wordCount === MAX_WORDS ? "limit" : ""}`}>
-          {wordCount} / {MAX_WORDS} 단어 words
+          {wordCount} / {MAX_WORDS} words
         </div>
       </div>
 
       <button onClick={analyze} disabled={loading}>
-        {loading ? "Submitting... / 제출 중..." : "Submit Essay / 에세이 제출"}
+        {loading ? "Submitting... " : "Submit Essay "}
       </button>
 
       {error && <div style={{ color: "red" }}>{error}</div>}
@@ -106,22 +95,17 @@ Vocabulary Page Component
 function VocabularyPage({ renderText, submitSession }) {
   return (
     <div>
-      <h2>단어 옵션 확인 / Word options</h2>
-
+      <h2>AI Revised Text</h2>
       <p>
-        표시된 단어를 순서대로 모두 클릭하여 가능한 단어 옵션을 확인해 주세요.
-        각 단어에 대해 원하는 옵션을 선택하거나 기존 단어를 그대로 유지할 수 있습니다.
-      </p>
-
-      <p>
-        Please click all highlighted words in order to view the available word options.
-        For each word, you may select a different option or keep the original word.
+        Review the AI's suggested revisions. Click on highlighted words and phrases to see alternative options.
+        Vocabulary suggestions are shown in yellow and grammar suggestions are shown in blue.
+        You can select a different option or keep the original text.
       </p>
 
       <div className="text">{renderText()}</div>
 
       <button onClick={submitSession}>
-        변경 사항 제출 / Submit changes
+        Submit changes
       </button>
     </div>
   );
@@ -134,19 +118,15 @@ function ThankYouPage({ goHome }) {
   return (
     <div className="centered">
       <h2>
-        참여해 주셔서 감사합니다.
-        <br />
-        Thank you for participating.
+      Thank you for participating.
       </h2>
 
       <p>
-        응답이 저장되었습니다.
-        <br />
-        Your responses have been recorded.
+      Your responses have been recorded.
       </p>
 
       <button onClick={goHome}>
-        처음으로 / Home
+        Home
       </button>
     </div>
   );
@@ -202,22 +182,72 @@ function App() {
         }
 
         let searchStart = 0;
-        const editsWithIds = data.edits
+        const editsWithPositions = data.edits
           .map((e, i) => {
-            const start = essay.indexOf(e.original, searchStart);
-            if (start === -1) return null;
-
-            searchStart = start + e.original.length;
-
-            return {
-              ...e,
-              id: `edit-${i}`,
-              start,
-              end: start + e.original.length,
-              appliedText: e.original
-            };
+            // Try exact match first
+            let start = essay.indexOf(e.original, 0);
+            
+            // If not found, try flexible whitespace matching
+            if (start === -1) {
+              const pattern = e.original.replace(/\s+/g, '\\s+');
+              const regex = new RegExp(pattern, 'i');  // Case-insensitive
+              const match = essay.match(regex);
+              
+              if (match) {
+                start = match.index;
+              }
+            }
+            
+            return start !== -1 ? { edit: e, start, index: i } : null;
           })
-          .filter(Boolean);
+          .filter(Boolean)
+          .sort((a, b) => a.start - b.start);  // Sort by position
+
+        const filteredEdits = [];
+        editsWithPositions.forEach(({ edit, start, index }) => {
+          const end = start + edit.original.length;
+          const overlapIndex = filteredEdits.findIndex((accepted) =>
+            start < accepted.end && accepted.start < end
+          );
+
+          if (overlapIndex === -1) {
+            filteredEdits.push({ edit, start, end, index });
+            return;
+          }
+
+          const accepted = filteredEdits[overlapIndex];
+
+          if (edit.type === 'grammar' && accepted.edit.type === 'vocabulary') {
+            edit.secondary = {
+              ...accepted.edit,
+              start: accepted.start,
+              end: accepted.end,
+              id: `edit-${accepted.index}`
+            };
+            filteredEdits[overlapIndex] = { edit, start, end, index };
+          } else if (edit.type === 'vocabulary' && accepted.edit.type === 'grammar') {
+            accepted.edit.secondary = {
+              ...edit,
+              start,
+              end,
+              id: `edit-${index}`
+            };
+            filteredEdits[overlapIndex] = accepted;
+          }
+          // If both are same type or accepted is grammar, keep accepted
+        });
+
+        console.log('Received edits:', data.edits);
+        console.log('Edits with positions:', editsWithPositions);
+        console.log('Filtered overlapping edits:', filteredEdits);
+
+        const editsWithIds = filteredEdits.map(({ edit, start, end, index }) => ({
+          ...edit,
+          id: `edit-${index}`,
+          start,
+          end,
+          appliedText: edit.original
+        }));
 
         setEdits(editsWithIds);
         setPage("vocab");
@@ -291,6 +321,55 @@ function App() {
     setActiveEditId(null);
   }
 
+  function applySecondaryEdit(editId, replacementText) {
+    const parentEdit = edits.find((e) => e.id === editId);
+    if (!parentEdit || !parentEdit.secondary) {
+      return;
+    }
+
+    const secondary = parentEdit.secondary;
+    const parentText = displayText.slice(parentEdit.start, parentEdit.end);
+    const pattern = secondary.original.replace(/\s+/g, '\\s+');
+    const regex = new RegExp(pattern, 'i');
+    const match = parentText.match(regex);
+    if (!match) {
+      return;
+    }
+
+    const subStart = parentEdit.start + match.index;
+    const subEnd = subStart + match[0].length;
+    const delta = replacementText.length - (subEnd - subStart);
+
+    setDisplayText((prev) => prev.slice(0, subStart) + replacementText + prev.slice(subEnd));
+
+    setEdits((prev) =>
+      prev.map((e) => {
+        if (e.id === editId) {
+          return {
+            ...e,
+            secondaryApplied: {
+              start: subStart,
+              end: subStart + replacementText.length,
+              original: secondary.original,
+              appliedText: replacementText
+            },
+            end: e.end + delta
+          };
+        }
+
+        if (e.start > subStart) {
+          return {
+            ...e,
+            start: e.start + delta,
+            end: e.end + delta
+          };
+        }
+
+        return e;
+      })
+    );
+  }
+
   function renderText() {
     let cursor = 0;
     const elements = [];
@@ -301,13 +380,23 @@ function App() {
       elements.push(
         <span
           key={edit.id}
-          className={edit.appliedText !== edit.original ? "applied" : "highlight"}
+          className={edit.appliedText !== edit.original ? `applied-${edit.type}` : `highlight-${edit.type}`}
           onClick={(e) => {
             e.stopPropagation();
             setActiveEditId(edit.id);
           }}
         >
-          {displayText.slice(edit.start, edit.end)}
+          {edit.secondaryApplied && edit.secondaryApplied.start >= edit.start && edit.secondaryApplied.end <= edit.end ? (
+            <>
+              {displayText.slice(edit.start, edit.secondaryApplied.start)}
+              <span className="highlight-vocabulary">
+                {displayText.slice(edit.secondaryApplied.start, edit.secondaryApplied.end)}
+              </span>
+              {displayText.slice(edit.secondaryApplied.end, edit.end)}
+            </>
+          ) : (
+            displayText.slice(edit.start, edit.end)
+          )}
 
           {activeEditId === edit.id && (
             <div
@@ -316,17 +405,36 @@ function App() {
               onClick={(e) => e.stopPropagation()}
             >
               <button onClick={() => applyEdit(edit.id, edit.original, 0)}>
-                변경 없음 / No change
+                No change
               </button>
 
               {edit.options.map((o, index) => (
-                <button
-                  key={o.level}
-                  onClick={() => applyEdit(edit.id, o.text, index + 1)}
-                >
-                  {o.text}
-                </button>
+                <div key={o.level}>
+                  <button onClick={() => applyEdit(edit.id, o.text, index + 1)}>
+                    {o.text}
+                  </button>
+                  {edit.type === "grammar" && edit.explanation && (
+                    <div className="explanation">{edit.explanation}</div>
+                  )}
+                </div>
               ))}
+
+              {edit.secondary && edit.secondary.type === "vocabulary" && (
+                <div className="secondary-note">
+                  <div className="secondary-label">
+                    Grammar is applied first here. Vocabulary alternatives are also available.
+                  </div>
+                  {edit.secondary.options.map((o, index) => (
+                    <button
+                      key={o.level}
+                      className="secondary-button"
+                      onClick={() => applySecondaryEdit(edit.id, o.text)}
+                    >
+                      {o.text}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </span>
